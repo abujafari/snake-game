@@ -4,12 +4,15 @@
 #include <time.h>
 
 // define screen requirements
-const int sc_w = 10;
-const int sc_h = 10;
+const int sc_w = 15;
+const int sc_h = 15;
 char snake = '*';
 int length = 0, is_loop = 1;
 int head_row, end_row;
 int head_column, end_column;
+int time_level = 1000;
+
+void delay(int milliseconds);
 
 int *SetZeroToArray(int (*map)[sc_h], int size_width, int size_height);
 
@@ -29,26 +32,59 @@ void Move(int (*map)[sc_h], int head_row, int head_column, char operation);
 
 void CheckControl(int (*map)[sc_h], char control);
 
+int waitFor(unsigned int secs);
 
 int main() {
     int array[sc_w][sc_h];
     int *map;
+    w:
+    printf("Enter Level of Difficulty : \n e -> Easy \n r -> Regular \n h -> Hard \n u -> Ultra Hard");
+    switch (getch()) {
+        case 'e':
+            time_level = 1200;
+            break;
+        case 'r':
+            time_level = 900;
+            break;
+        case 'h':
+            time_level = 500;
+            break;
+        case 'u':
+            time_level = 200;
+            break;
+        default:
+            goto w;
+            break;
+    }
+    system("cls");
+    printf("Ready??");
+    waitFor(1);
+    system("cls");
+    printf("Start");
+    waitFor(1);
+
 
     map = SetZeroToArray(array, sc_w, sc_h);
     CreateFirstSnake(map);
-
     Draw(map);
+    char control = 'd';
+    int inner_loop = 1;
     while (is_loop == 1) {
-        char control = getch();
-        //Move(map, head_row, head_column);
+        if (kbhit()) {
+            control = getch();
+        }
         CheckControl(map, control);
         Draw(map);
         printf("\nlength: %d", length);
+        delay(time_level);
         PrintHead();
         PrintEnd();
-        PrintScreen(map);
+        //PrintScreen(map);
+
     }
+
     printf("\nGame Over!!");
+
     getch();
     return 0;
 }
@@ -178,13 +214,12 @@ void CheckControl(int (*map)[sc_h], char control) {
             break;
     }
     if (is_true_control == 1) {
-        if (head_column <= 9 && head_column >= 0 && head_row <= 9 && head_row >= 0) {
+        if (head_column <= sc_h - 1 && head_column >= 0 && head_row <= sc_w - 1 && head_row >= 0) {
             map[pre_row][pre_column] = 0;
             Move(map, pre_row, pre_column, control);
             CheckExitedCell(map, head_row, head_column, control);
         } else {
             is_loop = 0;
-
         }
     }
 
@@ -221,10 +256,10 @@ int CreateFirstSnake(int (*map)[sc_h]) {
     end_row = x;
     map[x][y] = 1;
     length++;
-    if (y + 1 < 10) {
+    if (y + 1 < sc_w) {
         map[x][y + 1] = 1;
         length++;
-        if (y + 2 < 10) {
+        if (y + 2 < sc_w) {
             map[x][y + 2] = 1;
             length++;
             head_column = y + 2;
@@ -291,8 +326,13 @@ void Draw(int (*array)[sc_h]) {
     system("cls");
     for (int i = 0; i < sc_h; ++i) {
         for (int j = 0; j < sc_w; ++j) {
+            printf(".");
             if (array[i][j] == 1) {
-                printSnake();
+                if (i == head_row && j == head_column) {
+                    printf("@");
+                } else {
+                    printSnake();
+                }
             } else {
                 printf(" ");
             }
@@ -309,13 +349,18 @@ void PrintEnd() {
     printf("row: %d column: %d\n", end_row, end_column);
 }
 
-void delay(int number_of_seconds) {
-    // Converting time into milli_seconds
-    int milli_seconds = 1000 * number_of_seconds;
+int waitFor(unsigned int secs) {
+    unsigned int retTime = time(0) + secs;   // Get finishing time.
+    while (time(0) < retTime);               // Loop until it arrives.
+    return 1;
+}
 
-    // Stroing start time
-    clock_t start_time = clock();
+void delay(int milliseconds) {
+    long pause;
+    clock_t now, then;
 
-    // looping till required time is not acheived
-    while (clock() < start_time + milli_seconds);
+    pause = milliseconds * (CLOCKS_PER_SEC / 1000);
+    now = then = clock();
+    while ((now - then) < pause)
+        now = clock();
 }
