@@ -19,6 +19,8 @@ void PrintEnd();
 
 void Draw(int (*array)[sc_h]);
 
+void CheckExitedCell(int (*map)[sc_h], int h_row, int h_col, char control);
+
 void PrintScreenDebug(int (*array)[sc_h]);
 
 int CreateFirstSnake(int (*map)[sc_h]);
@@ -26,6 +28,7 @@ int CreateFirstSnake(int (*map)[sc_h]);
 void Move(int (*map)[sc_h], int head_row, int head_column, char operation);
 
 void CheckControl(int (*map)[sc_h], char control);
+
 
 int main() {
     int array[sc_w][sc_h];
@@ -58,19 +61,19 @@ void Move(int (*map)[sc_h], int phead_row, int phead_column, char operation) {
             if (map[phead_row + 1][phead_column] == 1) {
                 fake_column = phead_column;
                 fake_row = phead_row + 1;
-                map[phead_row][phead_column] = 1;
+                CheckExitedCell(map, phead_row, phead_column, operation);
                 is_continue = 1;
                 operation = 'w';
             } else if (map[phead_row - 1][phead_column] == 1) {
                 fake_column = phead_column;
                 fake_row = phead_row - 1;
-                map[phead_row][phead_column] = 1;
+                CheckExitedCell(map, phead_row, phead_column, operation);
                 is_continue = 1;
                 operation = 's';
             } else if (map[phead_row][phead_column - 1] == 1) {
                 fake_column = phead_column - 1;
                 fake_row = phead_row;
-                map[phead_row][phead_column] = 1;
+                CheckExitedCell(map, phead_row, phead_column, operation);
                 is_continue = 1;
                 operation = 'd';
             }
@@ -79,19 +82,19 @@ void Move(int (*map)[sc_h], int phead_row, int phead_column, char operation) {
             if (map[phead_row - 1][phead_column] == 1) {
                 fake_column = phead_column;
                 fake_row = phead_row - 1;
-                map[phead_row][phead_column] = 1;
+                CheckExitedCell(map, phead_row, phead_column, operation);
                 is_continue = 1;
                 operation = 's';
             } else if (map[phead_row][phead_column + 1] == 1) {
                 fake_column = phead_column + 1;
                 fake_row = phead_row;
-                map[phead_row][phead_column] = 1;
+                CheckExitedCell(map, phead_row, phead_column, operation);
                 is_continue = 1;
                 operation = 'a';
             } else if (map[phead_row][phead_column - 1] == 1) {
                 fake_column = phead_column - 1;
                 fake_row = phead_row;
-                map[phead_row][phead_column] = 1;
+                CheckExitedCell(map, phead_row, phead_column, operation);
                 is_continue = 1;
                 operation = 'd';
             }
@@ -100,19 +103,19 @@ void Move(int (*map)[sc_h], int phead_row, int phead_column, char operation) {
             if (map[phead_row + 1][phead_column] == 1) {
                 fake_column = phead_column;
                 fake_row = phead_row + 1;
-                map[phead_row][phead_column] = 1;
+                CheckExitedCell(map, phead_row, phead_column, operation);
                 is_continue = 1;
                 operation = 'w';
             } else if (map[phead_row][phead_column + 1] == 1) {
                 fake_column = phead_column + 1;
                 fake_row = phead_row;
-                map[phead_row][phead_column] = 1;
+                CheckExitedCell(map, phead_row, phead_column, operation);
                 is_continue = 1;
                 operation = 'a';
             } else if (map[phead_row][phead_column - 1] == 1) {
                 fake_column = phead_column - 1;
                 fake_row = phead_row;
-                map[phead_row][phead_column] = 1;
+                CheckExitedCell(map, phead_row, phead_column, operation);
                 is_continue = 1;
                 operation = 'd';
             }
@@ -121,19 +124,19 @@ void Move(int (*map)[sc_h], int phead_row, int phead_column, char operation) {
             if (map[phead_row - 1][phead_column] == 1) {
                 fake_column = phead_column;
                 fake_row = phead_row - 1;
-                map[phead_row][phead_column] = 1;
+                CheckExitedCell(map, phead_row, phead_column, operation);
                 is_continue = 1;
                 operation = 's';
             } else if (map[phead_row][phead_column + 1] == 1) {
                 fake_column = phead_column + 1;
                 fake_row = phead_row;
-                map[phead_row][phead_column] = 1;
+                CheckExitedCell(map, phead_row, phead_column, operation);
                 is_continue = 1;
                 operation = 'a';
             } else if (map[phead_row + 1][phead_column] == 1) {
                 fake_column = phead_column;
                 fake_row = phead_row + 1;
-                map[phead_row][phead_column] = 1;
+                CheckExitedCell(map, phead_row, phead_column, operation);
                 is_continue = 1;
                 operation = 'w';
             }
@@ -179,13 +182,33 @@ void CheckControl(int (*map)[sc_h], char control) {
         Move(map, pre_row, pre_column, control);
     }
     if (head_column <= 9 && head_column >= 0 && head_row <= 9 && head_row >= 0) {
-        map[head_row][head_column] = 1;
-
+        CheckExitedCell(map, head_row, head_column, control);
     } else {
         is_loop = 0;
         printf("Game Over!!");
     }
 
+}
+
+void CheckExitedCell(int (*map)[sc_h], int h_row, int h_col, char control) {
+    if (map[h_row][h_col] == 1) {
+        switch (control) {
+            case 'w':
+                CheckExitedCell(map, h_row - 1, h_col, control);
+                break;
+            case 's':
+                CheckExitedCell(map, h_row + 1, h_col, control);
+                break;
+            case 'd':
+                CheckExitedCell(map, h_row, h_col + 1, control);
+                break;
+            case 'a':
+                CheckExitedCell(map, h_row, h_col - 1, control);
+                break;
+        }
+    } else {
+        map[h_row][h_col] = 1;
+    }
 }
 
 int CreateFirstSnake(int (*map)[sc_h]) {
