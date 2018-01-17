@@ -48,7 +48,7 @@ int main() {
         PrintEnd();
         PrintScreen(map);
     }
-
+    printf("\nGame Over!!");
     getch();
     return 0;
 }
@@ -178,14 +178,14 @@ void CheckControl(int (*map)[sc_h], char control) {
             break;
     }
     if (is_true_control == 1) {
-        map[pre_row][pre_column] = 0;
-        Move(map, pre_row, pre_column, control);
-    }
-    if (head_column <= 9 && head_column >= 0 && head_row <= 9 && head_row >= 0) {
-        CheckExitedCell(map, head_row, head_column, control);
-    } else {
-        is_loop = 0;
-        printf("Game Over!!");
+        if (head_column <= 9 && head_column >= 0 && head_row <= 9 && head_row >= 0) {
+            map[pre_row][pre_column] = 0;
+            Move(map, pre_row, pre_column, control);
+            CheckExitedCell(map, head_row, head_column, control);
+        } else {
+            is_loop = 0;
+
+        }
     }
 
 }
