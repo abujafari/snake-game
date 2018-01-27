@@ -14,6 +14,10 @@ int time_level = 1000;
 
 void delay(int milliseconds);
 
+void AddToEndSnake(int (*snake)[sc_h] , char control);
+
+int CreateChanceNum();
+
 int *SetZeroToArray(int (*map)[sc_h], int size_width, int size_height);
 
 void PrintScreen(int (*array)[sc_h]);
@@ -28,6 +32,8 @@ void PrintScreenDebug(int (*array)[sc_h]);
 
 int CreateFirstSnake(int (*map)[sc_h]);
 
+void CreateFood(int (*snake)[sc_h]);
+
 void Move(int (*map)[sc_h], int head_row, int head_column, char operation);
 
 void CheckControl(int (*map)[sc_h], char control);
@@ -41,16 +47,16 @@ int main() {
     printf("Enter Level of Difficulty : \n e -> Easy \n r -> Regular \n h -> Hard \n u -> Ultra Hard");
     switch (getch()) {
         case 'e':
-            time_level = 1200;
-            break;
-        case 'r':
             time_level = 900;
             break;
-        case 'h':
+        case 'r':
             time_level = 500;
             break;
-        case 'u':
+        case 'h':
             time_level = 200;
+            break;
+        case 'u':
+            time_level = 50;
             break;
         default:
             goto w;
@@ -66,6 +72,7 @@ int main() {
 
     map = SetZeroToArray(array, sc_w, sc_h);
     CreateFirstSnake(map);
+    CreateFood(map);
     Draw(map);
     char control = 'd';
     int inner_loop = 1;
@@ -76,10 +83,11 @@ int main() {
         CheckControl(map, control);
         Draw(map);
         printf("\nlength: %d", length);
-        delay(time_level);
-        PrintHead();
-        PrintEnd();
+        //delay(time_level);
+        _sleep(time_level);
+
         //PrintScreen(map);
+
 
     }
 
@@ -184,6 +192,8 @@ void Move(int (*map)[sc_h], int phead_row, int phead_column, char operation) {
 
     if (is_continue == 1) {
         map[fake_row][fake_column] = 0;
+        end_row = phead_row;
+        end_column = phead_column;
         Move(map, fake_row, fake_column, operation);
     }
 }
@@ -212,6 +222,11 @@ void CheckControl(int (*map)[sc_h], char control) {
         default:
             is_true_control = 0;
             break;
+    }
+    if (map[head_row][head_column] == 2) {
+        length++;
+        CreateFood(map);
+        AddToEndSnake(map , control);
     }
     if (is_true_control == 1) {
         if (head_column <= sc_h - 1 && head_column >= 0 && head_row <= sc_w - 1 && head_row >= 0) {
@@ -333,12 +348,17 @@ void Draw(int (*array)[sc_h]) {
                 } else {
                     printSnake();
                 }
+            } else if (array[i][j] == 2) {
+                printf("#");
             } else {
                 printf(" ");
             }
         }
         printf("\n");
     }
+    PrintHead();
+    PrintEnd();
+    //PrintScreen(array);
 }
 
 void PrintHead() {
@@ -363,4 +383,36 @@ void delay(int milliseconds) {
     now = then = clock();
     while ((now - then) < pause)
         now = clock();
+}
+
+int CreateChanceNum() {
+    srand(time(NULL));
+    int r = rand() % sc_w;
+    return r;
+}
+
+void CreateFood(int (*snake)[sc_h]) {
+    int x, y;
+
+    x = CreateChanceNum();
+    y = CreateChanceNum();
+
+    if (snake[x][y] == 1) {
+        CreateFood(snake);
+    } else {
+        snake[x][y] = 2;
+    }
+
+}
+
+void AddToEndSnake(int (*snake)[sc_h], char control) {
+    if(snake[end_row+1][end_column] == 1){
+        snake[end_row-1][end_column] = 1;
+    }else if(snake[end_row-1][end_column] == 1){
+        snake[end_row+1][end_column] = 1;
+    }else if(snake[end_row][end_column+1] == 1){
+        snake[end_row][end_column-1] = 1;
+    }else if(snake[end_row][end_column-1] == 1){
+        snake[end_row][end_column+1] = 1;
+    }
 }
