@@ -59,15 +59,15 @@ include CMakeFiles/snake.dir/flags.make
 CMakeFiles/snake.dir/main.c.obj: CMakeFiles/snake.dir/flags.make
 CMakeFiles/snake.dir/main.c.obj: ../main.c
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=D:\dev\c\projects\snake\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/snake.dir/main.c.obj"
-	C:\PROGRA~2\Dev-Cpp\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\snake.dir\main.c.obj   -c D:\dev\c\projects\snake\main.c
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -o CMakeFiles\snake.dir\main.c.obj   -c D:\dev\c\projects\snake\main.c
 
 CMakeFiles/snake.dir/main.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/snake.dir/main.c.i"
-	C:\PROGRA~2\Dev-Cpp\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\dev\c\projects\snake\main.c > CMakeFiles\snake.dir\main.c.i
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E D:\dev\c\projects\snake\main.c > CMakeFiles\snake.dir\main.c.i
 
 CMakeFiles/snake.dir/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/snake.dir/main.c.s"
-	C:\PROGRA~2\Dev-Cpp\MinGW64\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\dev\c\projects\snake\main.c -o CMakeFiles\snake.dir\main.c.s
+	C:\MinGW\bin\gcc.exe $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S D:\dev\c\projects\snake\main.c -o CMakeFiles\snake.dir\main.c.s
 
 CMakeFiles/snake.dir/main.c.obj.requires:
 

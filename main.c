@@ -14,7 +14,7 @@ int time_level = 1000;
 
 void delay(int milliseconds);
 
-void AddToEndSnake(int (*snake)[sc_h] , char control);
+void AddToEndSnake(int (*snake)[sc_h], char control);
 
 int CreateChanceNum();
 
@@ -34,7 +34,7 @@ int CreateFirstSnake(int (*map)[sc_h]);
 
 void CreateFood(int (*snake)[sc_h]);
 
-void Move(int (*map)[sc_h], int head_row, int head_column, char operation);
+void Move(int (*map)[sc_h], int phead_row, int phead_column, char operation);
 
 void CheckControl(int (*map)[sc_h], char control);
 
@@ -97,8 +97,8 @@ int main() {
     return 0;
 }
 
-void Move(int (*map)[sc_h], int phead_row, int phead_column, char operation) {
-    int fake_row, fake_column;
+void Move(int (*map)[sc_h], int phead_row, int phead_column, char operation ) {
+    int fake_row = phead_row, fake_column = phead_column;
     int is_continue = 0;
     switch (operation) {
         case 'd':
@@ -226,7 +226,7 @@ void CheckControl(int (*map)[sc_h], char control) {
     if (map[head_row][head_column] == 2) {
         length++;
         CreateFood(map);
-        AddToEndSnake(map , control);
+        AddToEndSnake(map, control);
     }
     if (is_true_control == 1) {
         if (head_column <= sc_h - 1 && head_column >= 0 && head_row <= sc_w - 1 && head_row >= 0) {
@@ -244,17 +244,18 @@ void CheckExitedCell(int (*map)[sc_h], int h_row, int h_col, char control) {
     if (map[h_row][h_col] == 1) {
         switch (control) {
             case 'w':
-                CheckExitedCell(map, h_row - 1, h_col, control);
+                CheckExitedCell(map, h_row - 1, h_col, 'w');
                 break;
             case 's':
-                CheckExitedCell(map, h_row + 1, h_col, control);
+                CheckExitedCell(map, h_row + 1, h_col, 's');
                 break;
             case 'd':
-                CheckExitedCell(map, h_row, h_col + 1, control);
+                CheckExitedCell(map, h_row, h_col + 1, 'd');
                 break;
             case 'a':
-                CheckExitedCell(map, h_row, h_col - 1, control);
+                CheckExitedCell(map, h_row, h_col - 1, 'a');
                 break;
+
         }
     } else {
         map[h_row][h_col] = 1;
@@ -266,7 +267,7 @@ int CreateFirstSnake(int (*map)[sc_h]) {
 
     srand(time(NULL));
     x = rand() % sc_w;
-    y = rand() % sc_h;
+    y = rand() % (sc_h-3);
     head_row = x;
     end_row = x;
     map[x][y] = 1;
@@ -406,13 +407,13 @@ void CreateFood(int (*snake)[sc_h]) {
 }
 
 void AddToEndSnake(int (*snake)[sc_h], char control) {
-    if(snake[end_row+1][end_column] == 1){
-        snake[end_row-1][end_column] = 1;
-    }else if(snake[end_row-1][end_column] == 1){
-        snake[end_row+1][end_column] = 1;
-    }else if(snake[end_row][end_column+1] == 1){
-        snake[end_row][end_column-1] = 1;
-    }else if(snake[end_row][end_column-1] == 1){
-        snake[end_row][end_column+1] = 1;
+    if (snake[end_row + 1][end_column] == 1) {
+        snake[end_row - 1][end_column] = 1;
+    } else if (snake[end_row - 1][end_column] == 1) {
+        snake[end_row + 1][end_column] = 1;
+    } else if (snake[end_row][end_column + 1] == 1) {
+        snake[end_row][end_column - 1] = 1;
+    } else if (snake[end_row][end_column - 1] == 1) {
+        snake[end_row][end_column + 1] = 1;
     }
 }

@@ -11,10 +11,10 @@
 				<Option working_dir="D:/dev/c/projects/snake/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="snake">
@@ -24,19 +24,18 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="C:/Program Files (x86)/Dev-Cpp/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"/>
-					<Add directory="C:/Program Files (x86)/Dev-Cpp/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/x86_64-w64-mingw32"/>
-					<Add directory="C:/Program Files (x86)/Dev-Cpp/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/backward"/>
-					<Add directory="C:/Program Files (x86)/Dev-Cpp/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/4.9.2/include"/>
-					<Add directory="C:/Program Files (x86)/Dev-Cpp/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/4.9.2/../../../../include"/>
-					<Add directory="C:/Program Files (x86)/Dev-Cpp/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/4.9.2/include-fixed"/>
-					<Add directory="C:/Program Files (x86)/Dev-Cpp/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/4.9.2/../../../../x86_64-w64-mingw32/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/4.7.2/include/c++"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/4.7.2/include/c++/mingw32"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/4.7.2/include/c++/backward"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/4.7.2/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/4.7.2/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/4.7.2/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 snake"/>
-					<CompileFile command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 snake"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="snake/fast">
@@ -46,39 +45,38 @@
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="C:/Program Files (x86)/Dev-Cpp/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++"/>
-					<Add directory="C:/Program Files (x86)/Dev-Cpp/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/x86_64-w64-mingw32"/>
-					<Add directory="C:/Program Files (x86)/Dev-Cpp/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/4.9.2/include/c++/backward"/>
-					<Add directory="C:/Program Files (x86)/Dev-Cpp/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/4.9.2/include"/>
-					<Add directory="C:/Program Files (x86)/Dev-Cpp/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/4.9.2/../../../../include"/>
-					<Add directory="C:/Program Files (x86)/Dev-Cpp/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/4.9.2/include-fixed"/>
-					<Add directory="C:/Program Files (x86)/Dev-Cpp/MinGW64/bin/../lib/gcc/x86_64-w64-mingw32/4.9.2/../../../../x86_64-w64-mingw32/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/4.7.2/include/c++"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/4.7.2/include/c++/mingw32"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/4.7.2/include/c++/backward"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/4.7.2/include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/4.7.2/../../../../include"/>
+					<Add directory="c:\mingw\bin\../lib/gcc/mingw32/4.7.2/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 snake/fast"/>
-					<CompileFile command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 snake/fast"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
 				<Option working_dir="D:/dev/c/projects/snake/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
 				<Option working_dir="D:/dev/c/projects/snake/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/PROGRA~2/Dev-Cpp/MinGW64/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/MinGW/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/MinGW/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/MinGW/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/MinGW/bin/mingw32-make.exe -f &quot;D:/dev/c/projects/snake/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
