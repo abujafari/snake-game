@@ -11,6 +11,8 @@ int length = 0, is_loop = 1;
 int head_row, end_row;
 int head_column, end_column;
 int time_level = 1000;
+int move_count = 0;
+
 
 void delay(int milliseconds);
 
@@ -32,6 +34,8 @@ void PrintScreenDebug(int (*array)[sc_h]);
 
 int CreateFirstSnake(int (*map)[sc_h]);
 
+int CheckEndToMove(int (*map)[sc_h], int row, int col);
+
 void CreateFood(int (*snake)[sc_h]);
 
 void Move(int (*map)[sc_h], int phead_row, int phead_column, char operation);
@@ -44,6 +48,7 @@ int main() {
     int array[sc_w][sc_h];
     int *map;
     w:
+    system("cls");
     printf("Enter Level of Difficulty : \n e -> Easy \n r -> Regular \n h -> Hard \n u -> Ultra Hard");
     switch (getch()) {
         case 'e':
@@ -63,10 +68,10 @@ int main() {
             break;
     }
     system("cls");
-    printf("Ready??");
+    printf("\tReady??");
     waitFor(1);
     system("cls");
-    printf("Start");
+    printf("\tStart");
     waitFor(1);
 
 
@@ -82,7 +87,7 @@ int main() {
         }
         CheckControl(map, control);
         Draw(map);
-        printf("\nlength: %d", length);
+        printf("\nScore: %d\n", length);
         //delay(time_level);
         _sleep(time_level);
 
@@ -97,92 +102,181 @@ int main() {
     return 0;
 }
 
-void Move(int (*map)[sc_h], int phead_row, int phead_column, char operation ) {
-    int fake_row = phead_row, fake_column = phead_column;
+void Move(int (*map)[sc_h], int phead_row, int phead_column, char operation) {
+
+    move_count++;
+
+    char pre_operation = operation;
+    int fake_row, fake_column; //for initializing variables
     int is_continue = 0;
     switch (operation) {
         case 'd':
-            if (map[phead_row + 1][phead_column] == 1) {
-                fake_column = phead_column;
-                fake_row = phead_row + 1;
-                CheckExitedCell(map, phead_row, phead_column, operation);
-                is_continue = 1;
-                operation = 'w';
-            } else if (map[phead_row - 1][phead_column] == 1) {
-                fake_column = phead_column;
-                fake_row = phead_row - 1;
-                CheckExitedCell(map, phead_row, phead_column, operation);
-                is_continue = 1;
-                operation = 's';
-            } else if (map[phead_row][phead_column - 1] == 1) {
+            if (map[phead_row][phead_column - 1] == 1) {
                 fake_column = phead_column - 1;
                 fake_row = phead_row;
+                if (CheckScope(fake_row, fake_column) == 0) {
+                    break;
+                }
                 CheckExitedCell(map, phead_row, phead_column, operation);
                 is_continue = 1;
                 operation = 'd';
+
+                break;
+            } else if (map[phead_row - 1][phead_column] == 1) {
+                fake_column = phead_column;
+                fake_row = phead_row - 1;
+                if (CheckScope(fake_row, fake_column) == 0) {
+                    break;
+                }
+                /*if (fake_row == head_row && (fake_column - 1) == head_column) {
+                    break;
+                }*/
+                if (CheckEndToMove(map, fake_row, fake_column - 1) == 0) {
+                    break;
+                }
+                CheckExitedCell(map, phead_row, phead_column, operation);
+                is_continue = 1;
+                operation = 's';
+
+                break;
+            } else if (map[phead_row + 1][phead_column] == 1) {
+                fake_column = phead_column;
+                fake_row = phead_row + 1;
+                if (CheckScope(fake_row, fake_column) == 0) {
+                    break;
+                }
+                if (CheckEndToMove(map, fake_row, fake_column - 1) == 0) {
+                    break;
+                }
+                CheckExitedCell(map, phead_row, phead_column, operation);
+                is_continue = 1;
+                operation = 'w';
+                break;
             }
             break;
         case 's':
             if (map[phead_row - 1][phead_column] == 1) {
                 fake_column = phead_column;
                 fake_row = phead_row - 1;
+                if (CheckScope(fake_row, fake_column) == 0) {
+                    break;
+                }
                 CheckExitedCell(map, phead_row, phead_column, operation);
                 is_continue = 1;
                 operation = 's';
+
+                break;
             } else if (map[phead_row][phead_column + 1] == 1) {
                 fake_column = phead_column + 1;
                 fake_row = phead_row;
+                if (CheckScope(fake_row, fake_column) == 0) {
+                    break;
+                }
+                if (CheckEndToMove(map, fake_row - 1, fake_column) == 0) {
+                    break;
+                }
                 CheckExitedCell(map, phead_row, phead_column, operation);
                 is_continue = 1;
                 operation = 'a';
+
+                break;
             } else if (map[phead_row][phead_column - 1] == 1) {
                 fake_column = phead_column - 1;
                 fake_row = phead_row;
+                if (CheckScope(fake_row, fake_column) == 0) {
+                    break;
+                }
+                if (CheckEndToMove(map, fake_row - 1, fake_column) == 0) {
+                    break;
+                }
                 CheckExitedCell(map, phead_row, phead_column, operation);
                 is_continue = 1;
                 operation = 'd';
+
+                break;
             }
             break;
         case 'w':
             if (map[phead_row + 1][phead_column] == 1) {
                 fake_column = phead_column;
                 fake_row = phead_row + 1;
+                if (CheckScope(fake_row, fake_column) == 0) {
+                    break;
+                }
                 CheckExitedCell(map, phead_row, phead_column, operation);
                 is_continue = 1;
                 operation = 'w';
+
+                break;
             } else if (map[phead_row][phead_column + 1] == 1) {
                 fake_column = phead_column + 1;
                 fake_row = phead_row;
+                if (CheckScope(fake_row, fake_column) == 0) {
+                    break;
+                }
+                if (CheckEndToMove(map, fake_row + 1, fake_column) == 0) {
+                    break;
+                }
                 CheckExitedCell(map, phead_row, phead_column, operation);
                 is_continue = 1;
                 operation = 'a';
+
+                break;
             } else if (map[phead_row][phead_column - 1] == 1) {
                 fake_column = phead_column - 1;
                 fake_row = phead_row;
+                if (CheckScope(fake_row, fake_column) == 0) {
+                    break;
+                }
+                if (CheckEndToMove(map, fake_row + 1, fake_column) == 0) {
+                    break;
+                }
                 CheckExitedCell(map, phead_row, phead_column, operation);
                 is_continue = 1;
                 operation = 'd';
+
+                break;
             }
             break;
         case 'a':
-            if (map[phead_row - 1][phead_column] == 1) {
-                fake_column = phead_column;
-                fake_row = phead_row - 1;
-                CheckExitedCell(map, phead_row, phead_column, operation);
-                is_continue = 1;
-                operation = 's';
-            } else if (map[phead_row][phead_column + 1] == 1) {
+            if (map[phead_row][phead_column + 1] == 1) {
                 fake_column = phead_column + 1;
                 fake_row = phead_row;
+                if (CheckScope(fake_row, fake_column) == 0) {
+                    break;
+                }
                 CheckExitedCell(map, phead_row, phead_column, operation);
                 is_continue = 1;
                 operation = 'a';
+
+                break;
+            } else if (map[phead_row - 1][phead_column] == 1) {
+                fake_column = phead_column;
+                fake_row = phead_row - 1;
+                if (CheckScope(fake_row, fake_column) == 0) {
+                    break;
+                }
+                if (CheckEndToMove(map, fake_row, fake_column + 1) == 0) {
+                    break;
+                }
+                CheckExitedCell(map, phead_row, phead_column, operation);
+                is_continue = 1;
+                operation = 's';
+                break;
             } else if (map[phead_row + 1][phead_column] == 1) {
                 fake_column = phead_column;
                 fake_row = phead_row + 1;
+                if (CheckScope(fake_row, fake_column) == 0) {
+                    break;
+                }
+
+                if (CheckEndToMove(map, fake_row, fake_column + 1) == 0) {
+                    break;
+                }
                 CheckExitedCell(map, phead_row, phead_column, operation);
                 is_continue = 1;
                 operation = 'w';
+                break;
             }
             break;
         default:
@@ -194,11 +288,14 @@ void Move(int (*map)[sc_h], int phead_row, int phead_column, char operation ) {
         map[fake_row][fake_column] = 0;
         end_row = phead_row;
         end_column = phead_column;
-        Move(map, fake_row, fake_column, operation);
+        if (move_count != length) {
+            Move(map, fake_row, fake_column, operation);
+        }
     }
 }
 
 void CheckControl(int (*map)[sc_h], char control) {
+    move_count = 0;
     int pre_row = head_row;
     int pre_column = head_column;
     int is_true_control = 1;
@@ -223,13 +320,17 @@ void CheckControl(int (*map)[sc_h], char control) {
             is_true_control = 0;
             break;
     }
-    if (map[head_row][head_column] == 2) {
-        length++;
-        CreateFood(map);
-        AddToEndSnake(map, control);
-    }
     if (is_true_control == 1) {
+
         if (head_column <= sc_h - 1 && head_column >= 0 && head_row <= sc_w - 1 && head_row >= 0) {
+            if (map[head_row][head_column] == 2) {
+                length++;
+                CreateFood(map);
+                AddToEndSnake(map, control);
+            } else if (map[head_row][head_column] == 1) {
+                is_loop = 0;
+                return;
+            }
             map[pre_row][pre_column] = 0;
             Move(map, pre_row, pre_column, control);
             CheckExitedCell(map, head_row, head_column, control);
@@ -241,7 +342,7 @@ void CheckControl(int (*map)[sc_h], char control) {
 }
 
 void CheckExitedCell(int (*map)[sc_h], int h_row, int h_col, char control) {
-    if (map[h_row][h_col] == 1) {
+    /*if (map[h_row][h_col] == 1) {
         switch (control) {
             case 'w':
                 CheckExitedCell(map, h_row - 1, h_col, 'w');
@@ -255,11 +356,15 @@ void CheckExitedCell(int (*map)[sc_h], int h_row, int h_col, char control) {
             case 'a':
                 CheckExitedCell(map, h_row, h_col - 1, 'a');
                 break;
+            default:
+
+                break;
 
         }
     } else {
         map[h_row][h_col] = 1;
-    }
+    }*/
+    map[h_row][h_col] = 1;
 }
 
 int CreateFirstSnake(int (*map)[sc_h]) {
@@ -267,7 +372,7 @@ int CreateFirstSnake(int (*map)[sc_h]) {
 
     srand(time(NULL));
     x = rand() % sc_w;
-    y = rand() % (sc_h-3);
+    y = rand() % (sc_h - 5);
     head_row = x;
     end_row = x;
     map[x][y] = 1;
@@ -345,7 +450,11 @@ void Draw(int (*array)[sc_h]) {
             printf(".");
             if (array[i][j] == 1) {
                 if (i == head_row && j == head_column) {
-                    printf("@");
+                    //printf("@");
+                    printSnake();
+                } else if (i == end_row && j == end_column) {
+                    //printf("$");
+                    printSnake();
                 } else {
                     printSnake();
                 }
@@ -357,8 +466,9 @@ void Draw(int (*array)[sc_h]) {
         }
         printf("\n");
     }
-    PrintHead();
-    PrintEnd();
+    //PrintHead();
+    //PrintEnd();
+    //printf("move Count %d",move_count);
     //PrintScreen(array);
 }
 
@@ -386,17 +496,11 @@ void delay(int milliseconds) {
         now = clock();
 }
 
-int CreateChanceNum() {
-    srand(time(NULL));
-    int r = rand() % sc_w;
-    return r;
-}
-
 void CreateFood(int (*snake)[sc_h]) {
+    //srand(time(NULL));
     int x, y;
-
-    x = CreateChanceNum();
-    y = CreateChanceNum();
+    x = rand() % sc_w;
+    y = rand() % sc_w;
 
     if (snake[x][y] == 1) {
         CreateFood(snake);
@@ -416,4 +520,18 @@ void AddToEndSnake(int (*snake)[sc_h], char control) {
     } else if (snake[end_row][end_column - 1] == 1) {
         snake[end_row][end_column + 1] = 1;
     }
+}
+
+int CheckEndToMove(int (*map)[sc_h], int row, int col) {
+    if (row == head_row && col == head_column) {
+        return 0;
+    }
+    return 1;
+}
+
+int CheckScope(int row, int col) {
+    if (row < 0 || row >= sc_w || col < 0 || col >= sc_w) {
+        return 0;
+    }
+    return 1;
 }
