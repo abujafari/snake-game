@@ -48,20 +48,24 @@ int main() {
     int array[sc_w][sc_h];
     int *map;
     w:
+    is_loop = 1;
+    flag_exit = 0;
+    move_count = 0;
+    length = 0;
     system("cls");
     printf("Enter Level of Difficulty : \n e -> Easy \n r -> Regular \n h -> Hard \n u -> Ultra Hard");
     switch (getch()) {
         case 'e':
-            time_level = 900;
-            break;
-        case 'r':
             time_level = 500;
             break;
-        case 'h':
+        case 'r':
             time_level = 200;
             break;
+        case 'h':
+            time_level = 100;
+            break;
         case 'u':
-            time_level = 50;
+            time_level = 40;
             break;
         default:
             goto w;
@@ -80,7 +84,6 @@ int main() {
     CreateFood(map);
     Draw(map);
     char control = 'd';
-    int inner_loop = 1;
     while (is_loop == 1) {
         if (kbhit()) {
             control = getch();
@@ -95,17 +98,23 @@ int main() {
 
 
     }
-    if (flag_exit != 1)
+    if (flag_exit != 1) {
         printf("\nGame Over!!");
-
-    getch();
+        printf("\npress r to play again");
+    } else {
+        printf("press r to play again");
+    }
+    char ch = getch();
+    if (ch == 'r') {
+        goto w;
+    }
     return 0;
 }
 
 void Move(int (*map)[sc_h], int phead_row, int phead_column, char operation) {
-
-    move_count++;
-
+    if (CheckScope(phead_row, phead_column) == 0) {
+        return;
+    }
     char pre_operation = operation;
     int fake_row, fake_column; //for initializing variables
     int is_continue = 0;
@@ -285,12 +294,13 @@ void Move(int (*map)[sc_h], int phead_row, int phead_column, char operation) {
     }
 
     if (is_continue == 1) {
+        move_count++;
         map[fake_row][fake_column] = 0;
-        if (move_count == length-1) {
+        if (move_count == length - 1) {
             end_row = phead_row;
             end_column = phead_column;
         }
-        if (move_count != length) {
+        if (move_count < length - 1) {
             Move(map, fake_row, fake_column, operation);
         }
 
@@ -457,11 +467,11 @@ void Draw(int (*array)[sc_h]) {
             printf(".");
             if (array[i][j] == 1) {
                 if (i == head_row && j == head_column) {
-                    printf("@");
-                    //printSnake();
+//                    printf("@");
+                    printSnake();
                 } else if (i == end_row && j == end_column) {
-                    printf("$");
-                    //printSnake();
+//                    printf("$");
+                    printSnake();
                 } else {
                     printSnake();
                 }
@@ -474,8 +484,6 @@ void Draw(int (*array)[sc_h]) {
         printf("\n");
     }
     printf("\npress x to exit");
-    PrintHead();
-    PrintEnd();
     printf("move Count %d", move_count);
     //PrintScreen(array);
 }
@@ -494,18 +502,7 @@ int waitFor(unsigned int secs) {
     return 1;
 }
 
-void delay(int milliseconds) {
-    long pause;
-    clock_t now, then;
-
-    pause = milliseconds * (CLOCKS_PER_SEC / 1000);
-    now = then = clock();
-    while ((now - then) < pause)
-        now = clock();
-}
-
 void CreateFood(int (*snake)[sc_h]) {
-    //srand(time(NULL));
     int x, y;
     x = rand() % sc_w;
     y = rand() % sc_w;
