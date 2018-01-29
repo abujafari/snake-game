@@ -12,7 +12,7 @@ int head_row, end_row;
 int head_column, end_column;
 int time_level = 1000;
 int move_count = 0;
-
+int flag_exit = 0;
 
 void delay(int milliseconds);
 
@@ -95,8 +95,8 @@ int main() {
 
 
     }
-
-    printf("\nGame Over!!");
+    if (flag_exit != 1)
+        printf("\nGame Over!!");
 
     getch();
     return 0;
@@ -286,11 +286,14 @@ void Move(int (*map)[sc_h], int phead_row, int phead_column, char operation) {
 
     if (is_continue == 1) {
         map[fake_row][fake_column] = 0;
-        end_row = phead_row;
-        end_column = phead_column;
+        if (move_count == length-1) {
+            end_row = phead_row;
+            end_column = phead_column;
+        }
         if (move_count != length) {
             Move(map, fake_row, fake_column, operation);
         }
+
     }
 }
 
@@ -313,6 +316,7 @@ void CheckControl(int (*map)[sc_h], char control) {
             head_column--;
             break;
         case 'x':
+            flag_exit = 1;
             is_true_control = 0;
             is_loop = 0;
             break;
@@ -321,7 +325,10 @@ void CheckControl(int (*map)[sc_h], char control) {
             break;
     }
     if (is_true_control == 1) {
-
+        if (CheckScope(head_row, head_column) == 0) {
+            is_loop = 0;
+            return;
+        }
         if (head_column <= sc_h - 1 && head_column >= 0 && head_row <= sc_w - 1 && head_row >= 0) {
             if (map[head_row][head_column] == 2) {
                 length++;
@@ -450,11 +457,11 @@ void Draw(int (*array)[sc_h]) {
             printf(".");
             if (array[i][j] == 1) {
                 if (i == head_row && j == head_column) {
-                    //printf("@");
-                    printSnake();
+                    printf("@");
+                    //printSnake();
                 } else if (i == end_row && j == end_column) {
-                    //printf("$");
-                    printSnake();
+                    printf("$");
+                    //printSnake();
                 } else {
                     printSnake();
                 }
@@ -466,18 +473,19 @@ void Draw(int (*array)[sc_h]) {
         }
         printf("\n");
     }
-    //PrintHead();
-    //PrintEnd();
-    //printf("move Count %d",move_count);
+    printf("\npress x to exit");
+    PrintHead();
+    PrintEnd();
+    printf("move Count %d", move_count);
     //PrintScreen(array);
 }
 
 void PrintHead() {
-    printf("\nrow: %d column: %d\n", head_row, head_column);
+    printf("\nhead => row: %d column: %d\n", head_row, head_column);
 }
 
 void PrintEnd() {
-    printf("row: %d column: %d\n", end_row, end_column);
+    printf("end => row: %d column: %d\n", end_row, end_column);
 }
 
 int waitFor(unsigned int secs) {
@@ -523,8 +531,13 @@ void AddToEndSnake(int (*snake)[sc_h], char control) {
 }
 
 int CheckEndToMove(int (*map)[sc_h], int row, int col) {
-    if (row == head_row && col == head_column) {
+    /*if (row == head_row && col == head_column) {
         return 0;
+    }*/
+    if (move_count == length) {
+        if (map[row][col] == 1) {
+            return 0;
+        }
     }
     return 1;
 }
